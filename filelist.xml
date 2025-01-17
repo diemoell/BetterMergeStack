@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<contentpackage name="BetterMergeStack" modversion="1.0.0" gameversion="1.7.7.0" corepackage="false">
+    <Other file="%ModDir%/LICENSE" />
+</contentpackage>
