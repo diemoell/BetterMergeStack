@@ -1,11 +1,10 @@
-using System.Reflection;
-using System.Collections.Generic;
-using System;
+﻿using System.Reflection;
+using Barotrauma.Extensions;
+using Microsoft.Xna.Framework;
 using HarmonyLib;
 using System.Linq;
 using Barotrauma;
-using Barotrauma.Networking;
-using Barotrauma.Extensions;
+using BmsUtils;
 
 // debug
 // using System.Diagnostics;
@@ -37,7 +36,7 @@ namespace Bms_Harmony
                 Barotrauma.DebugConsole.AddWarning("Patch_MergeStacks TargetMethod");
                 return AccessTools.Method(typeof(Barotrauma.Items.Components.ItemContainer), "MergeStacks");
             }
-            public static bool Prefix(Barotrauma.Items.Components.ItemContainer __instance)
+            static bool Prefix(Barotrauma.Items.Components.ItemContainer __instance)
             {
                 for (int i = 0; i < __instance.Inventory.Capacity - 1; i++)
                 {
@@ -63,5 +62,31 @@ namespace Bms_Harmony
             }
         }
 
+        [HarmonyPatch(typeof(Barotrauma.Items.Components.ItemContainer))]
+        class Patch_CreateGUI
+        {
+            static MethodBase TargetMethod()
+            {
+                Barotrauma.DebugConsole.AddWarning("Patch_CreateGUI TargetMethod");
+                return AccessTools.Method(typeof(Barotrauma.Items.Components.ItemContainer), "CreateGUI");
+            }
+
+            static void Postfix(Barotrauma.Items.Components.ItemContainer __instance)
+            {
+                if (__instance.Inventory.Capacity > 1)
+                {
+                    var layoutGroup = __instance.GuiFrame.FindChild(c => c is Barotrauma.GUILayoutGroup, recursive: true);
+                    new GUIButton(new RectTransform(Vector2.One, layoutGroup.RectTransform, scaleBasis: ScaleBasis.Smallest), style: "PushButton")
+                    {
+                        ToolTip = TextManager.Get("bms.pushicon"),
+                        OnClicked = (btn, userdata) =>
+                        {
+                            Util.PushItems(true);
+                            return true;
+                        }
+                    };
+                }
+            }
+        }
     }
 }
