@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <contentpackage name="BetterMergeStack" modversion="1.0.0" gameversion="1.7.7.0" corepackage="false">
 	<Other file="%ModDir%/LICENSE" />
-	<UIStyle file="%ModDir:BetterMergeStack%/Text/style.xml" />
-	<Text file="%ModDir:BetterMergeStack%/Text/English.xml" />
-	<Text file="%ModDir:BetterMergeStack%/Text/SimplifiedChinese.xml" />
+	<UIStyle file="%ModDir%/Text/style.xml" />
+	<Text file="%ModDir%/Text/English.xml" />
+	<Text file="%ModDir%/Text/SimplifiedChinese.xml" />
 </contentpackage>
